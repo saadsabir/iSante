@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DoctorModule } from './doctor/doctor.module';
-import { DoctorController } from './doctor/doctor.controller';
+import { DoctorsController } from './doctors/doctors.controller';
+import { DoctorsModule } from './doctors/doctors.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost/nest'), DoctorModule],
-  controllers: [AppController, DoctorController],
+  imports: [MongooseModule.forRoot('mongodb://localhost/nest'), DoctorsModule],
+  controllers: [AppController, DoctorsController],
   providers: [AppService],
 })
 export class AppModule {}
