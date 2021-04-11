@@ -9,6 +9,10 @@ $ sudo npm install --save @nestjs/mongoose mongoose => install mongoose
 
 $ nest g resource => Crud generator - command not only generates all the NestJS building blocks (module, service, controller classes) but also an entity class, DTO classes as well as the testing (.spec) files.
 
+$ nest g mo : Generate a module
+$ nest g co : Generate a controller
+$ nest g s : Generate a service 
+
 $ npm i --save @nestjs/swagger => to install swagger
 
 

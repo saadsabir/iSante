@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable,Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Doctor } from './entities/doctor.entity';
+import { Repository } from 'typeorm';
+import { DoctorDto } from './dto/doctor.dto';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
