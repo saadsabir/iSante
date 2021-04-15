@@ -1,34 +1,92 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, HttpStatus,HttpException,UseGuards,Body,UseInterceptors,ClassSerializerInterceptor, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { DoctorsService } from './doctors.service';
-import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('doctors')
+@ApiBearerAuth()
+@ApiTags('doctors')
+@Controller('api/doctors')
 export class DoctorsController {
   constructor(private readonly doctorsService: DoctorsService) {}
 
   @Post()
-  create(@Body() createDoctorDto: CreateDoctorDto) {
-    return this.doctorsService.create(createDoctorDto);
+  async addDoctor(
+    @Body('id') id: number,
+    @Body('num') num: string,
+    @Body('fullname') fullname: string,
+    @Body('adress') adress: string,
+    @Body('zipcode') zipcode: string,
+    @Body('city') city: string,
+    @Body('country') country: string,
+    @Body('phone') phone: string,
+    @Body('email') email: string,
+  ){
+    const doctor = await this.doctorsService.insertDoctor(
+      id,
+      num,
+      fullname,
+      adress,
+      zipcode,
+      city,
+      country,
+      phone,
+      email,
+    );
+    return {
+      statusCode : HttpStatus.OK,
+      message : 'Doctor added successfully'
+    }
   }
 
   @Get()
-  findAll() {
-    return this.doctorsService.findAll();
+  async getAllDoctors() {
+    const doctors = await this.doctorsService.getDoctors();
+    return doctors;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.doctorsService.findOne(+id);
+  getDoctor(@Param('id') id: number){
+    return this.doctorsService.getSingleDoctor(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
-    return this.doctorsService.update(+id, updateDoctorDto);
+  async updateDoctor(
+    @Param('id') id: number,
+    @Body('num') num: string,
+    @Body('fullname') fullname: string,
+    @Body('adress') adress: string,
+    @Body('zipcode') zipcode: string,
+    @Body('city') city: string,
+    @Body('country') country: string,
+    @Body('phone') phone: string,
+    @Body('email') email: string,
+  ){
+    const doctor = await this.doctorsService.
+    updateDoctor(
+      id,
+      num,
+      fullname,
+      adress,
+      zipcode,
+      city,
+      country,
+      phone,
+      email,
+    );
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Doctor updated successfully',
+      doctor: doctor,
+    };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.doctorsService.remove(+id);
+  async removeDoctor(@Param('id') id: number){
+    const isDeleted = await this.doctorsService.deleteDoctor(id);
+    if(isDeleted){
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'doctor deleted successfully',
+      };
+    }
   }
 }

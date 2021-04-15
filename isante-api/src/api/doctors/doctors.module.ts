@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { DoctorsService } from './doctors.service';
-import { DoctorsController } from './doctors.controller';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  controllers: [DoctorsController],
-  providers: [DoctorsService]
+  imports: [MongooseModule.forRoot('mongodb;//localhost/isante_db_dev')],
 })
 export class DoctorsModule {}
