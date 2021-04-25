@@ -15,8 +15,15 @@ $ nest g s : Generate a service
 
 $ npm i --save @nestjs/swagger => to install swagger
 
-install mongodb in mac : 
-- brew install mongodb
+$ npm run start : to run project
 
+
+
+# ----------- DOC
+- https://docs.nestjs.com/
+- https://github.com/nestjs/swagger
+- https://docs.mongodb.com/manual/crud/
+- https://github.com/saadsabir/iSante/
+# -----------
 
 --exemple : https://github.com/corbig/nest-notes-api-example
