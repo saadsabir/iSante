@@ -1,117 +1,56 @@
 import { Injectable,NotFoundException,Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { timeStamp } from 'node:console';
-import { Doctor } from './doctors.model';
+import { Repository } from 'typeorm';
+import { Doctor } from './doctor.entity';
+import { DoctorDto } from './doctor.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DoctorsService {
-  constructor(@InjectModel('Doctor') private readonly doctorModel: Model<Doctor>){}
+  constructor(@InjectRepository(Doctor) private readonly doctorRepository: Repository<Doctor>){}
 
-  async insertDoctor(id: number, num: string,fullname: string,adress: string,zipcode: string,city: string,country: string,phone: string,email: string, usefulInfo: string, introduction: string, languages: string, graduationDate: string, diplomaLibelle: string, trainings: string, experiences: string, profilPicture: string, cabinetPic1: string, cabinetPic2: string,cabinetPic3: string, prices: string, timetable: string, emergencyContact: string, paymentMethods: string, specialty: string, expertise: string, refundsConvention: string, healthCardAccepted: boolean){
-    const newDoctor = new this.doctorModel({
-      id,
-      num,
-      fullname,
-      adress,
-      zipcode,
-      city,
-      country,
-      phone,
-      isPhoneVerified : false,//by default false
-      email,
-      isEmailVerified : false,//by default false
-      createdAt: timeStamp,
-      updatedAt: null,
-      endDate: null,
-      isDeleted: false,//by default false
-      usefulInfo,
-      introduction,
-      languages,
-      graduationDate,
-      diplomaLibelle,
-      trainings,
-      experiences,
-      profilPicture,
-      cabinetPic1,
-      cabinetPic2,
-      cabinetPic3,
-      prices,
-      timetable,
-      emergencyContact,
-      paymentMethods,
-      specialty,
-      expertise,
-      refundsConvention,
-      healthCardAccepted,
-    });
-    const result = await newDoctor.save();
-    return result;
+  async insertDoctor(doctor : Doctor): Promise<Doctor> {
+    try{
+      return await this.doctorRepository.save(doctor);
+    }catch (error){
+      Logger.error(error);
+      return null;
+    }
   }
 
-  async getDoctors(){
-    const doctors = await this.doctorModel.find().exec();
-    return doctors.map(doctor => ({
-      id: doctor.id,
-      num: doctor.num,
-      fullname: doctor.fullname,
-      adress: doctor.adress,
-      zipcode: doctor.zipcode,
-      city: doctor.city,
-      country: doctor.country,
-      phone: doctor.phone,
-      isPhoneVerified: doctor.isPhoneVerified,
-      email: doctor.email,
-      isEmailVerified: doctor.isEmailVerified,
-      createdAt: doctor.createdAt,
-      updatedAt: doctor.updatedAt,
-      endDate: doctor.endDate,
-      isDeleted: doctor.isDeleted,
-    }));
+  async getDoctors(): Promise<Doctor> {
+    try{
+      return await this.doctorRepository.findOneOrFail();
+    }
+    catch(error){
+      Logger.error(error);
+      return null;
+    }
   }
 
-  async getSingleDoctor(id: number) {
-    const doctor = await this.findDoctor(id);
-    return {
-      id: doctor.id,
-      num: doctor.num,
-      fullname: doctor.fullname,
-      adress: doctor.adress,
-      zipcode: doctor.zipcode,
-      city: doctor.city,
-      country: doctor.country,
-      phone: doctor.phone,
-      isPhoneVerified: doctor.isPhoneVerified,
-      email: doctor.email,
-      isEmailVerified: doctor.isEmailVerified,
-      createdAt: doctor.createdAt,
-      updatedAt: doctor.updatedAt,
-      endDate: doctor.endDate,
-      isDeleted: doctor.isDeleted,
-      usefulInfo: doctor.usefulInfo,
-      introduction: doctor.introduction,
-      languages: doctor.languages,
-      graduationDate: doctor.graduationDate,
-      diplomaLibelle: doctor.diplomaLibelle,
-      trainings: doctor.trainings,
-      experiences: doctor.experiences,
-      profilPicture: doctor.profilPicture,
-      cabinetPic1: doctor.cabinetPic1,
-      cabinetPic2: doctor.cabinetPic2,
-      cabinetPic3: doctor.cabinetPic3,
-      prices: doctor.prices,
-      timetable: doctor.timetable,
-      emergencyContact: doctor.emergencyContact,
-      paymentMethods: doctor.paymentMethods,
-      specialty: doctor.specialty,
-      expertise: doctor.expertise,
-      refundsConvention: doctor.refundsConvention,
-      healthCardAccepted: doctor.healthCardAccepted,
-    };
+  async getSingleDoctor(id: number): Promise<Doctor> {
+    try{
+      return await this.doctorRepository.findOneOrFail({ where: {id: id}});
+    }
+    catch(error){
+      Logger.error(error);
+      return null;
+    }
   }
 
-  async updateDoctor(id: number, num: string,fullname: string,adress: string, zipcode: string, city: string, country: string, phone: string, email: string, usefulInfo: string, introduction: string, languages: string, graduationDate: string, diplomaLibelle: string, trainings: string, experiences: string, profilPicture: string, cabinetPic1: string, cabinetPic2: string,cabinetPic3: string, prices: string, timetable: string, emergencyContact: string, paymentMethods: string, specialty: string, expertise: string, refundsConvention: string, healthCardAccepted: boolean){
-      const updateDoctor = await this.findDoctor(id);
+  async updateDoctor(id: number, num: string,fullname: string,adress: string, zipcode: string, city: string, country: string, phone: string, email: string, usefulInfo: string, introduction: string, languages: string, graduationDate: string, diplomaLibelle: string, trainings: string, experiences: string, profilPicture: string, cabinetPic1: string, cabinetPic2: string,cabinetPic3: string, prices: string, timetable: string, emergencyContact: string, paymentMethods: string, specialty: string, expertise: string, refundsConvention: string, healthCardAccepted: boolean): Promise<Doctor> {
+    var updateDoctor = null;
+    try{
+      updateDoctor = await this.doctorRepository.
+      findOneOrFail({where : {id: id}});
+    }
+    catch(error){
+      Logger.error(error);
+      updateDoctor = null;
+      return null;
+    }
+
+    if(updateDoctor !== null){
       if(num) {
         updateDoctor.num = num;
       }
@@ -139,7 +78,6 @@ export class DoctorsService {
         updateDoctor.isEmailVerified = false;
       }
       updateDoctor.updatedAt = new Date();
-
       if(usefulInfo){
         updateDoctor.usefulInfo = usefulInfo;
       }
@@ -197,35 +135,34 @@ export class DoctorsService {
       if(healthCardAccepted){
         updateDoctor.healthCardAccepted = healthCardAccepted;
       }
-
-      updateDoctor.save();
-      return updateDoctor;
+    }
+    updateDoctor.save(num,fullname,adress,zipcode,city,country,phone,email,usefulInfo,introduction,languages,graduationDate, diplomaLibelle, trainings,experiences, profilPicture, cabinetPic1, cabinetPic2,cabinetPic3, prices, timetable, emergencyContact,paymentMethods, specialty, expertise, refundsConvention,healthCardAccepted);
+    
+    return updateDoctor;
   }
   
-  async deleteDoctor(id: number){
-    const updateDoctor = await this.findDoctor(id);
-    if(updateDoctor.isDeleted === false && updateDoctor.endDate === null){
-      updateDoctor.isDeleted = true;
-      updateDoctor.endDate = new Date();
-      updateDoctor.save();
-      return true;
+  async deleteDoctor(id: number) : Promise<Doctor> {
+    var updateDoctor = null;
+    try{
+      updateDoctor = await this.doctorRepository.
+      findOneOrFail({where : {id: id}});
     }
-    else{
-      throw new NotFoundException('Doctor already deleted.');
+    catch(error){
+      Logger.error(error);
+      updateDoctor = null;
+      return null;
+    }
+    if(updateDoctor !== null){
+      if(updateDoctor.isDeleted === false && updateDoctor.
+        endDate === null){
+          updateDoctor.isDeleted = true;
+          updateDoctor.endDate = new Date();
+          updateDoctor.save();
+          return updateDoctor;
+        }
+        else{
+          throw new NotFoundException('Doctor already deleted.');
+        }
     }
   }
-
-  private async findDoctor(id: number): Promise<Doctor> {
-    let doctor;
-    try {
-      doctor = await (await this.doctorModel.findById(id)).execPopulate();
-    }catch (error) {
-      throw new NotFoundException('Could not find doctor.');
-    }
-    if(!doctor) {
-      throw new NotFoundException('Could not find doctor.');
-    }
-    return doctor;
-  }
-
 }

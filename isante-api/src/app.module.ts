@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiModule } from './api/api.module';
 import { ConfigurationModule } from './configuration/configuration.module';
@@ -19,8 +19,7 @@ import { ConfigurationService } from './configuration/configuration.service';
         synchronize: true,
       }) as any,
       inject: [ConfigurationService],
-    }),ApiModule
+    }),AuthModule, ApiModule
   ],
 })
 export class AppModule {}
-//mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
