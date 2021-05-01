@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpException, HttpStatus, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from '../api/users/entities/user.entity';
+import { User } from '../api/users/user.entity';
 import { Public } from './decorators/public.decorator';
 import { UserRegistrationDto } from '../api/users/dtos/userRegistration.dto';
 import { UserLoginDto } from '../api/users/dtos/userLogin.dto';

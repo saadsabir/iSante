@@ -1,11 +1,11 @@
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../api/users/users.service';
-import { User } from '../api/users/entities/user.entity';
+import { User } from '../api/users/user.entity';
 import { Role } from '../api/roles/role.entity';
 import { ConfigurationService } from '../configuration/configuration.service';
 import { UserRegistrationDto } from 'src/api/users/dtos/userRegistration.dto';
-import { UserLoginDto } from 'src/api/users/dtos/userLogin.dto';
+import { UserLoginDto } from '../api/users/dtos/userLogin.dto';
 
 @Injectable()
 export class AuthService {
