@@ -15,6 +15,8 @@ $ nest g s : Generate a service
 
 $ npm i --save @nestjs/swagger => to install swagger
 
+$ npm install -g win-node-env => to fix error : 'NODE_ENV' n’est pas reconnu en tant que commande interne
+
 $ npm run start : to run project
 
 
