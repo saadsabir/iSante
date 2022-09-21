@@ -1,5 +1,4 @@
 import { Injectable,NotFoundException,Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Repository } from 'typeorm';
 import { Doctor } from './doctor.entity';
 import { DoctorDto } from './doctor.dto';
