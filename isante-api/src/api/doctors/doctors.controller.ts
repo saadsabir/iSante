@@ -1,7 +1,7 @@
 import { Controller, Get, Post, HttpStatus,HttpException,UseGuards,Body,UseInterceptors,ClassSerializerInterceptor, Patch, Param, Delete, ParseIntPipe, Req } from '@nestjs/common';
 import { DoctorsService } from './doctors.service';
-import { Doctor } from './doctor.entity';
-import { DoctorDto } from './doctor.dto';
+import { Doctor } from './entities/doctor.entity';
+import { DoctorDto } from './dtos/doctor.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Doc } from 'prettier';
 import { request } from 'express';
