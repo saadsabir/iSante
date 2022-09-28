@@ -1,0 +1,3 @@
+- ORM signifie Object-Relational Mapping. Framework qui aide les devs à manipuler les bdds avec des classes. (pas besoin de créer les tables SQL, il les créés automatiquements à partir des classes).
+
+- Typescript est un langage de programmation open source fait par Microsoft. C'est un langage JS + POO .Typescript vient avec un compilateur (TSC).Pendant le développement c’est ce compilateur qui va transcompiler ton application Typescript en application Javascript. 

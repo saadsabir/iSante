@@ -17,14 +17,43 @@ $ npm i --save @nestjs/swagger => to install swagger
 
 $ npm install -g win-node-env => to fix error : 'NODE_ENV' n’est pas reconnu en tant que commande interne
 
-$ npm run start : to run project
+### RUNNING THE APP ###
 
+# development
+$ npm run start
 
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+
+### SWAGGER ###
+# The app provides a Swagger client to try the note REST API at :
+  http://localhost:3000/swagger
+
+### TEST  ###
+
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+
+### DOCUMENTATION ###
+
+# Compodoc
+$ npx compodoc -p tsconfig.json -s
 
 # ----------- DOC
+- https://www.typescriptlang.org/
 - https://docs.nestjs.com/
 - https://github.com/nestjs/swagger
-- https://docs.mongodb.com/manual/crud/
+- ##https://docs.mongodb.com/manual/crud/
+- https://www.npmjs.com/package/postgres
 - https://github.com/saadsabir/iSante/
 # -----------
 

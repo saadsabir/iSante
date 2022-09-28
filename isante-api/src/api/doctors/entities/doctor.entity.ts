@@ -1,15 +1,16 @@
-import { Entity,Column } from 'typeorm';
+import { Entity,Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Transform } from 'class-transformer';
 
 @Entity({ name: 'doctors' })
 export class Doctor {
 
-    //@PrimaryGeneratedColumn()
-    //id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
     //@ObjectIdColumn()
     //id: ObjectID;
 
-    @Column()
-    id: number;
+    //@Column()
+    //id: number;
 
     @Column()
     num: string;
@@ -41,7 +42,7 @@ export class Doctor {
     @Column()
     isEmailVerified: boolean;
 
-    @Column({ type: 'date' })
+    @CreateDateColumn({ type: 'date' })
     createdAt: Date;
 
     @Column({ type: 'date' })
@@ -49,6 +50,9 @@ export class Doctor {
 
     @Column({ type: 'date' })
     endDate: Date;
+
+    @Column()
+    isDeleted: boolean;
 
     @Column()
     usefulInfo: string;
