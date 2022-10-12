@@ -1,27 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiModule } from './api/api.module';
-import { ConfigurationModule } from './configuration/configuration.module';
-import { ConfigurationService } from './configuration/configuration.service';
+import { ConfigModule } from '@nestjs/config';
 
-
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { DatabaseModule } from './core/database/database.module';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { PostsModule } from './modules/posts/posts.module';
 @Module({
   imports: [
-    ConfigurationModule,
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigurationModule],
-      useFactory: async (ConfigService: ConfigurationService) => ({
-        type: ConfigService.get('DB_TYPE'),
-        host: ConfigService.get('DB_HOST'),
-        port: ConfigService.get('DB_PORT'),
-        username: ConfigService.get('DB_USERNAME'),
-        database: ConfigService.get('DB_NAME'),
-        entities: ['src/**/*.entity.ts'],
-        synchronize: true,
-      }) as any,
-      inject: [ConfigurationService],
-    }),AuthModule, ApiModule
+    ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
+    PostsModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -32,6 +32,13 @@
 $ npm install
 ```
 
+## Update packages
+$ npm update
+$ npm update -g
+
+## Build App
+* npm run build
+
 ## Running the app
 
 ```bash

@@ -55,6 +55,9 @@ $ npx compodoc -p tsconfig.json -s
 - ##https://docs.mongodb.com/manual/crud/
 - https://www.npmjs.com/package/postgres
 - https://github.com/saadsabir/iSante/
+- https://kinsta.com/fr/base-de-connaissances/nestjs/
 # -----------
 
---exemple : https://github.com/corbig/nest-notes-api-example
+--exemple : 
+https://github.com/onwuvic/nest-blog-api
+https://github.com/corbig/nest-notes-api-example
