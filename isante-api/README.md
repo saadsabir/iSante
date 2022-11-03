@@ -24,7 +24,17 @@
 
 ## Description
 
+Project made with nest and use
+Sequelize
+JWT
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+This project is a starter kit which implement the following :
+
+Nest.js
+Sequelize (ORM)
+Dotenv (Evironement variable)
+JWT (For Json Web Token authentication)
 
 ## Installation
 
